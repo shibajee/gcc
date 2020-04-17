@@ -8047,6 +8047,8 @@ mips_block_move_straight (rtx dest, rtx src, HOST_WIDE_INT length)
       if (MEM_ALIGN (src) == BITS_PER_WORD / 2
 	  && MEM_ALIGN (dest) == BITS_PER_WORD / 2)
 	bits = BITS_PER_WORD / 2;
+      else if (TARGET_LXRLX)
+		bits = MIN (MEM_ALIGN (src), MEM_ALIGN (dest));
       else
 	bits = BITS_PER_WORD;
     }
@@ -8422,6 +8424,8 @@ mips_expand_ext_as_unaligned_load (rtx dest, rtx src, HOST_WIDE_INT width,
     }
   else
     {
+      if (TARGET_LXRLX)
+        return false;
       emit_insn (gen_mov_lwl (temp, src, left));
       emit_insn (gen_mov_lwr (dest, copy_rtx (src), right, temp));
     }
@@ -8465,6 +8469,8 @@ mips_expand_ins_as_unaligned_store (rtx dest, rtx src, HOST_WIDE_INT width,
     }
   else
     {
+      if (TARGET_LXRLX)
+        return false;
       emit_insn (gen_mov_swl (dest, src, left));
       emit_insn (gen_mov_swr (copy_rtx (dest), copy_rtx (src), right));
     }

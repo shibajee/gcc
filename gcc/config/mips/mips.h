@@ -288,6 +288,15 @@ struct mips_cpu_info {
 				     || mips_arch == PROCESSOR_SB1A)
 #define TARGET_SR71K                (mips_arch == PROCESSOR_SR71000)
 #define TARGET_XLP                  (mips_arch == PROCESSOR_XLP)
+#define TARGET_LX4180               (mips_arch == PROCESSOR_LX4180)
+#define TARGET_RLX4181              (mips_arch == PROCESSOR_RLX4181)
+#define TARGET_RLX4281              (mips_arch == PROCESSOR_RLX4281)
+#define TARGET_RLX5181              (mips_arch == PROCESSOR_RLX5181)
+#define TARGET_LX5280               (mips_arch == PROCESSOR_LX5280)
+#define TARGET_RLX5281              (mips_arch == PROCESSOR_RLX5281)
+#define TARGET_LXRLX                (TARGET_LX4180 || TARGET_RLX4181	\
+				     || TARGET_RLX4281 || TARGET_RLX5181	\
+				     || TARGET_LX5280 || TARGET_RLX5281)
 
 /* Scheduling target defines.  */
 #define TUNE_20KC		    (mips_tune == PROCESSOR_20KC)
@@ -303,7 +312,7 @@ struct mips_cpu_info {
 #define TUNE_GS464		    (mips_tune == PROCESSOR_GS464)
 #define TUNE_GS464E		    (mips_tune == PROCESSOR_GS464E)
 #define TUNE_GS264E		    (mips_tune == PROCESSOR_GS264E)
-#define TUNE_MIPS3000               (mips_tune == PROCESSOR_R3000)
+#define TUNE_MIPS3000               (mips_tune == PROCESSOR_R3000 || TUNE_LXRLX)
 #define TUNE_MIPS3900               (mips_tune == PROCESSOR_R3900)
 #define TUNE_MIPS4000               (mips_tune == PROCESSOR_R4000)
 #define TUNE_MIPS4120               (mips_tune == PROCESSOR_R4120)
@@ -322,6 +331,15 @@ struct mips_cpu_info {
 #define TUNE_P5600                  (mips_tune == PROCESSOR_P5600)
 #define TUNE_I6400                  (mips_tune == PROCESSOR_I6400)
 #define TUNE_P6600                  (mips_tune == PROCESSOR_P6600)
+#define TUNE_LX4180                 (mips_tune == PROCESSOR_LX4180)
+#define TUNE_RLX4181                (mips_tune == PROCESSOR_RLX4181)
+#define TUNE_RLX4281                (mips_tune == PROCESSOR_RLX4281)
+#define TUNE_RLX5181                (mips_tune == PROCESSOR_RLX5181)
+#define TUNE_LX5280                 (mips_tune == PROCESSOR_LX5280)
+#define TUNE_RLX5281                (mips_tune == PROCESSOR_RLX5281)
+#define TUNE_LXRLX                  (TUNE_LX4180 || TUNE_RLX4181	\
+				     || TUNE_RLX4281 || TUNE_RLX5181	\
+				     || TUNE_LX5280 || TUNE_RLX5281)
 
 /* True if the pre-reload scheduler should try to create chains of
    multiply-add or multiply-subtract instructions.  For example,
@@ -782,7 +800,9 @@ struct mips_cpu_info {
 
 #define MIPS_ISA_LEVEL_SPEC \
   "%{" MIPS_ISA_LEVEL_OPTION_SPEC ":;: \
-     %{march=mips1|march=r2000|march=r3000|march=r3900:-mips1} \
+     %{march=mips1|march=r2000|march=r3000|march=r3900|march=lx4180 \
+       |march=rlx4181|march=rlx4281|march=rlx5181|march=lx5280 \
+       |march=rlx5281:-mips1} \
      %{march=mips2|march=r6000:-mips2} \
      %{march=mips3|march=r4*|march=vr4*|march=orion|march=loongson2*:-mips3} \
      %{march=mips4|march=r8000|march=vr5*|march=rm7000|march=rm9000 \
@@ -817,7 +837,9 @@ struct mips_cpu_info {
   "%{mhard-float|msoft-float|mno-float|march=mips*:; \
      march=vr41*|march=m4k|march=4k*|march=24kc|march=24kec \
      |march=34kc|march=34kn|march=74kc|march=1004kc|march=5kc \
-     |march=m14k*|march=m5101|march=octeon|march=xlr: -msoft-float; \
+     |march=m14k*|march=m5101|march=octeon|march=xlr|march=lx4180 \
+     |march=rlx4181|march=rlx4281|march=rlx5181|march=lx5280 \
+     |march=rlx5281: -msoft-float; \
      march=*: -mhard-float}"
 
 /* A spec condition that matches 32-bit options.  It only works if
@@ -1051,7 +1073,12 @@ struct mips_cpu_info {
    ST Loongson 2E/2F.  */
 #define ISA_HAS_CONDMOVE        (ISA_HAS_FP_CONDMOVE			\
 				 || TARGET_MIPS5900			\
-				 || TARGET_LOONGSON_2EF)
+				 || TARGET_LOONGSON_2EF		\
+				 || TARGET_RLX4181			\
+				 || TARGET_RLX4281			\
+				 || TARGET_RLX5181			\
+				 || TARGET_LX5280			\
+				 || TARGET_RLX5281)
 
 /* ISA has LDC1 and SDC1.  */
 #define ISA_HAS_LDC1_SDC1	(!ISA_MIPS1				\
@@ -1149,7 +1176,8 @@ struct mips_cpu_info {
 				      && (MODE) == V2SFmode))		\
 				 && !TARGET_MIPS16)
 
-#define ISA_HAS_LWL_LWR		(mips_isa_rev <= 5 && !TARGET_MIPS16)
+#define ISA_HAS_LWL_LWR		(mips_isa_rev <= 5 && !TARGET_MIPS16	\
+				  && !TARGET_LXRLX)
 
 #define ISA_HAS_IEEE_754_LEGACY	(mips_isa_rev <= 5)
 

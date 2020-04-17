@@ -21659,6 +21659,8 @@ The processor names are:
 @samp{r6000}, @samp{r8000},
 @samp{rm7000}, @samp{rm9000},
 @samp{r10000}, @samp{r12000}, @samp{r14000}, @samp{r16000},
+@samp{lx4180}, @samp{rlx4181}, @samp{rlx4281}, @samp{rlx5181},
+@samp{lx5280}, @samp{rlx5281},
 @samp{sb1},
 @samp{sr71000},
 @samp{vr4100}, @samp{vr4111}, @samp{vr4120}, @samp{vr4130}, @samp{vr4300},

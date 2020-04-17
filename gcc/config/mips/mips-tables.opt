@@ -711,3 +711,21 @@ Enum(mips_arch_opt_value) String(i6500) Value(106) Canonical
 EnumValue
 Enum(mips_arch_opt_value) String(p6600) Value(107) Canonical
 
+EnumValue
+Enum(mips_arch_opt_value) String(lx4180) Value(108) Canonical
+
+EnumValue
+Enum(mips_arch_opt_value) String(rlx4181) Value(109) Canonical
+
+EnumValue
+Enum(mips_arch_opt_value) String(rlx4281) Value(110) Canonical
+
+EnumValue
+Enum(mips_arch_opt_value) String(rlx5181) Value(111) Canonical
+
+EnumValue
+Enum(mips_arch_opt_value) String(lx5280) Value(112) Canonical
+
+EnumValue
+Enum(mips_arch_opt_value) String(rlx5281) Value(113) Canonical
+
